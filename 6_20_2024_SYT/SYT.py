@@ -21,8 +21,15 @@ def is_valid_SYT(candidate):
   >>> is_valid_SYT(((1, 2, 3), (5, 4), (6))
   False
   """
-  return False
-
+  for i in range(len(candidate)):
+    for j in range(len(candidate[i])):
+      if (i != 0 or j != 0):
+        bool_1 = candidate[abs(i - 1)][j] > candidate[i][j]
+        bool_2 = candidate[i][j - 1] > candidate[i][j]
+        if (bool_1 or bool_2):
+          return False
+  return True
+print(is_valid_SYT(((1, 2, 3), (4, 5, 6), (7, 8, 9))))
 def reshape_perm(perm, shape):
   """
   Reshapes a permutation into a tableau based on the given shape.
