@@ -18,10 +18,18 @@ def is_valid_SYT(candidate):
   Example:
   >>> is_valid_SYT(((1, 2, 3), (4, 5, 6), (7, 8, 9)))
   True
-  >>> is_valid_SYT(((1, 2, 3), (5, 4), (6))
+  >>> is_valid_SYT(((1, 2, 3), (5, 4), (6,))
   False
   """
-  return False
+  for i in range(len(candidate)):
+    for j in range(len(candidate[i])):
+      if (i != 0):
+        if (candidate[i][j] <= candidate[i-1][j]):
+          return False
+      if (j != 0):
+        if (candidate[i][j] <= candidate[i][j-1]):
+          return False
+  return True
 
 def reshape_perm(perm, shape):
   """
@@ -38,7 +46,14 @@ def reshape_perm(perm, shape):
   >>> reshape_perm((1, 2, 3, 4, 5, 6), (3, 2, 1))
   ((1, 2, 3), (4, 5), (6,))
   """
-  return tuple()
+  result = tuple()
+  shape_list = list(shape)
+  for i in range (len(shape_list)):
+    result_row = tuple()
+    for j in range(shape_list[i]):
+      result_row += (perm[sum(shape_list[:i])+j],)
+    result += (result_row,)
+  return result
 
 def SYTs(shape):
   """
@@ -57,6 +72,9 @@ def SYTs(shape):
 
   n = sum(shape)
   results = []
+  for perm in itertools.permutations(range(1, n+1)):
+    if is_valid_SYT(reshape_perm(perm, shape)):
+      results.append(reshape_perm(perm, shape))
   return results
 
 def random_SYT(shape):
@@ -75,7 +93,8 @@ def random_SYT(shape):
   >>> random_SYT((2, 1))
   ((1, 2), (3,))
   """
-  return tuple()
+  
+  return SYTs(shape)[random.randint(0, len(SYTs(shape))-1)]
 
 def random_SYT_2(shape):
   """
@@ -93,4 +112,9 @@ def random_SYT_2(shape):
   >>> random_SYT_2((2, 1))
   ((1, 2), (3,))
   """
-  return tuple()
+  while True:
+    n=sum(shape)
+    list_permutations = list(itertools.permutations(range(1, sum(shape)+1)))
+    tableau = tuple(list_permutations[random.randint(0, len(list_permutations)-1)])
+    if is_valid_SYT(reshape_perm(tableau, shape)):
+      return reshape_perm(tableau, shape)
