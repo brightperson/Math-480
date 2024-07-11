@@ -31,19 +31,21 @@ Tactics cheatsheet:
   - `assoc` and `comm` for associativity and commutativity
 -/
 
-theorem linear_formula (a : ℝ) (b: ℝ) (x: ℝ) (ha_ne_zero : a ≠ 0) : a*x+b = 0 ↔ x = -b/a := by
+theorem answer {a b x : ℝ} (h1: a ≠ 0) : a*x+b=0 ↔ x= -b/a := by
   apply Iff.intro
+  latex r"First case, we assume a*x+b=0 and prove x=-b/a"
   case mp =>
     intro h
     calc x = x - 0 := by simp
          _ = x - 0/a := by simp
          _ = x - (a*x+b)/a := by rw [h]
-         _ = x - (a/a)*xsorry - b/a := by ring
-         _ = x - 1*x - b/a := by simp [ha_ne_zero]
+         _ = x - (a/a)*x - b/a := by ring
+         _ = x - 1*x - b/a := by simp [h1]
          _ = -b/a := by ring
+  latex r"Second case, we assume x=-b/a and prove a*x+b=0"
   case mpr =>
     intro h
     calc a*x+b = a*(-b/a) + b := by rw [h]
              _ = (a/a) * -b + b := by ring
-             _ = 1 * -b + b := by simp [ha_ne_zero]
+             _ = 1 * -b + b := by simp [h1]
              _ = 0 := by ring

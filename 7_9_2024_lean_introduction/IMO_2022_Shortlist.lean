@@ -5,7 +5,7 @@ show_panel_widgets [latex]
 
 set_option linter.unusedTactic false
 
-/-! Let $(a_n)_{n \ge 1}$ be a sequence of real positive numbers with the property that $(a_{n+1})^2 + a_na_{n-2} ≤ a_n + a_{n+2}$ for all positive integers $n$. Show that $a_{2022} ≤ 1$.-/
+/-! Let $(a_n)_{n \ge 1}$ be a sequence of real positive numbers with the property that $(a_{n+1})^2 + a_na_{n+2} ≤ a_n + a_{n+2}$ for all positive integers $n$. Show that $a_{2022} ≤ 1$.-/
 theorem A1 (a: Nat → ℝ) (h_pos: ∀ n, a n > 0) (h_cond: ∀ n, (a (n+1))^2 + (a n)*(a (n+2)) ≤ a n + a (n+2)) : a 2022 ≤ 1 := by
   latex r"We begin by observing that $a_{n+1}^2 - 1 ≤ a_n + a_{n+2} - a_na_{n+2} - 1$, which is equivalent to $(a_{n+1})^2 - 1 ≤ (1-a_n)(a_{n+2} - 1)$."
   have h_cond' : ∀ n, (a (n+1))^2 - 1 ≤ (1 - a n) * (a (n+2) - 1) := by
